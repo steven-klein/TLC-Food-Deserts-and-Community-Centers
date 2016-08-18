@@ -1,4 +1,4 @@
-[{
+module.exports = [{
     name: "Coleman Regional Center",
     address: "384 Thompson Lane",
     address2: "Nashville, TN 37211",
@@ -336,4 +336,4 @@
             coordinates: [-86.863055, 36.163446]
         }
     }
-}]
+}];
