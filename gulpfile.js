@@ -31,15 +31,15 @@ var config = Object.assign({
     js: {
         entrypoint: 'app.js',
         src: 'resources/assets/js/',
-        dest: 'httpdocs/assets/js/'
+        dest: 'docs/assets/js/'
     },
     css: {
         entrypoint: 'app.css',
         src: 'resources/assets/css/',
-        dest: 'httpdocs/assets/css/'
+        dest: 'docs/assets/css/'
     },
     files: {
-        src: ['httpdocs/**/*.html']
+        src: ['docs/**/*.html']
     },
     copy: [
         {
@@ -50,7 +50,7 @@ var config = Object.assign({
                 'resources/assets/img/**/*.png',
                 'resources/assets/img/**/*.svg'
             ],
-            dest: 'httpdocs/assets/img/'
+            dest: 'docs/assets/img/'
         }
     ],
     autoprefix: [
