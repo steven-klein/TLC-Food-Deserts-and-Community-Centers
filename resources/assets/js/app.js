@@ -1,8 +1,10 @@
 //import our data
-var data = require('./mapData');
-var libraries = require('./libraryData');
-var privateSchools = require('./privateSchoolData');
-var publicSchools = require('./publicSchoolData');
+var data = {
+    'communityCenters' : require('./mapData'),
+    'libraries' : require('./libraryData'),
+    'privateSchools' : require('./privateSchoolData'),
+    'publicSchools' : require('./publicSchoolData')
+};
 
 //new leaflet client
 L.mapbox.accessToken = 'pk.eyJ1Ijoid29wcnNrIiwiYSI6ImNpczBudWR1aDA0OHIyb3A2MW5tYmRkMGoifQ.2gh3oO0OBE1s3UWyVR9Vsg';
@@ -13,7 +15,7 @@ var map = L.mapbox.map('map', 'nashville.iad4amfc')
     .setView([36.1627, -86.7816], 12);
 
 
-function addMarkers( dataSet, markerIcon ){
+function createMarkers( dataSet, markerIcon ){
     for(var index=0; index<dataSet.length; index++){
 
         //create a new marker from the results
@@ -21,9 +23,6 @@ function addMarkers( dataSet, markerIcon ){
             'title' : dataSet[index].name,
             icon: L.mapbox.marker.icon(markerIcon)
         });
-
-        //add the marker to the map
-        marker.addTo(map);
 
         //bind a popup box to it
         marker.bindPopup(
@@ -33,45 +32,91 @@ function addMarkers( dataSet, markerIcon ){
         );
 
         dataSet[index].marker = marker.toGeoJSON();
+        dataSet[index].markerObj = marker;
 
     }
 
 }
-/**
- * community centers
- * @type {Number}
- */
-addMarkers( data, {
-    'marker-color' : '#2980ca',
-    'marker-symbol' : 'town-hall'
-});
+
+function addMarkers( dataSet ){
+    for(var index=0; index<dataSet.length; index++){
+        //add the marker to the map
+        dataSet[index].markerObj.addTo(map);
+    }
+}
+
+function removeMarkers( dataSet ){
+    for(var index=0; index<dataSet.length; index++){
+        //remove the marker to the map
+        map.removeLayer(dataSet[index].markerObj);
+    }
+}
+
+function listenForMarkerChanges(){
+    var legend = document.querySelector('#legend');
+    legend.addEventListener('change', handleCheck, false);
+}
+
+function handleCheck(e){
+
+    if (e.target !== e.currentTarget) {
+        var checkbox = e.target;
+        var isChecked = checkbox.checked || false;
+        var dataSource = checkbox.getAttribute('data-type');
+
+        if(isChecked){
+            addMarkers(data[dataSource]);
+        }else{
+            removeMarkers(data[dataSource]);
+        }
+    }
+
+    e.stopPropagation();
+}
 
 /**
- * Libraries
- * @type {Number}
+ * Init
  */
- addMarkers( libraries, {
-     'marker-color' : '#fa0',
-     'marker-symbol' : 'library'
- });
+(function init(){
 
- /**
-  * Private Schools
-  * @type {Number}
-  */
-  addMarkers( privateSchools, {
-      'marker-color' : '#9b59b6',
-      'marker-symbol' : 'college'
-  });
+    listenForMarkerChanges();
 
-  /**
-   * Public Schools
-   * @type {Number}
-   */
-   addMarkers( publicSchools, {
-       'marker-color' : '#2ecc71',
-       'marker-symbol' : 'college'
-   });
+    /**
+    * community centers
+    * @type {Number}
+    */
+    createMarkers( data.communityCenters, {
+        'marker-color' : '#2980ca',
+        'marker-symbol' : 'town-hall'
+    }); addMarkers(data.communityCenters);
+
+    /**
+    * Libraries
+    * @type {Number}
+    */
+    createMarkers( data.libraries, {
+        'marker-color' : '#fa0',
+        'marker-symbol' : 'library'
+    }); addMarkers(data.libraries);
+
+    /**
+    * Private Schools
+    * @type {Number}
+    */
+    createMarkers( data.privateSchools, {
+        'marker-color' : '#9b59b6',
+        'marker-symbol' : 'college'
+    });
+
+    /**
+    * Public Schools
+    * @type {Number}
+    */
+    createMarkers( data.publicSchools, {
+        'marker-color' : '#2ecc71',
+        'marker-symbol' : 'college'
+    });
+})();
 
 //loop through our data file, geocode the location
 //GEOCODE SOME DATASET

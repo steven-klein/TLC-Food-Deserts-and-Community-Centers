@@ -878,8 +878,8 @@ module.exports = [{
         "properties": {},
         "geometry": {
             "type": "Point",
-            "coordinates": [-93.964669,
-                39.918262
+            "coordinates": [-86.4454293,
+                36.3963816
             ]
         }
     }

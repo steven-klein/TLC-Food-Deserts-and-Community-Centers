@@ -180,16 +180,16 @@ module.exports = [{
     }
 }, {
     "name": "Brick Church College Prep",
-    "address": "",
-    "address2": "Brick Church, Tennessee",
+    "address": "2835 Brick Church Pike",
+    "address2": "Nashville, TN 37207",
     "phone": "",
     "marker": {
         "type": "Feature",
         "properties": {},
         "geometry": {
             "type": "Point",
-            "coordinates": [-86.904448,
-                35.2839669
+            "coordinates": [-86.7807823,
+                36.220244
             ]
         }
     }

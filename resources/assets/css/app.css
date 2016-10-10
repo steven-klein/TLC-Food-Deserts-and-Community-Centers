@@ -1,11 +1,59 @@
 @import 'normalize-css';
+
 body {
     margin: 0;
     padding: 0;
 }
+
 #map {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
+}
+
+#legend{
+    background: #fff;
+    z-index: 1000;
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    margin: 10px;
+    padding: 20px;
+    font-size: 14px;
+}
+
+#legend input[type="checkbox"]{
+    margin-bottom: 8px;
+}
+
+#legend input[type="checkbox"] + span{
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #287fc9;
+}
+
+#legend input[type="checkbox"] + span.libraries{
+    background-color: #fea900;
+}
+
+#legend input[type="checkbox"] + span.public-schools{
+    background-color: #2dcb70;
+}
+
+#legend input[type="checkbox"] + span.private-schools{
+    background-color: #9a58b5;
+}
+
+
+@media(max-width: 599px){
+    .leaflet-bottom.leaflet-right{
+        bottom: 100px;
+    }
+
+    .leaflet-right .leaflet-control{
+        margin: 10px;
+    }
 }
